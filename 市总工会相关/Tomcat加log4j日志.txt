@@ -1,0 +1,2 @@
+lib目录下增加：log4j-1.2.17.jar,log4j.properties文件
+bin目录下增加：tomcat-juli.jar

@@ -1,0 +1,276 @@
+中行正式：
+26.127.253.231   9080
+FTP: 26.127.253.231   21  ftpuser54/Ghk1123！ 
+
+http://26.127.253.221:9001/vcs/services/
+远程事务的控制：肖相东那边把数据发给我了，然后他收到我的返回后他又报错了，结果他认为没有发给我。下次可能会重新发。
+
+导入：F:\eclipseWS\ebs\src\com\css\sm\action\GetGhSmBasic.java
+F:\eclipseWS\ebs\WebContent\csscis\sm\memberinfo\memberInfo.jsp
+
+2017-12-12 17:33:41,187 [http-nio-8080-exec-8] ERROR com.opensymphony.webwork.dispatcher.ServletDispatcher - Could not execute action
+java.lang.NullPointerException
+导出报空null。
+大致是struts2 xml
+
+导出F:\eclipseWS\ebs\WebContent\csscis\sm\memberinfo\memberInfo.jsp
+
+Excel:系统中使用模板+POI，包括电子签名（插入图片）
+Doc：使用freemarker模板的方式。
+
+法律援助子系统的xsl配置说明
+
+附件上传：web.xml中\letter\com\css\apps\letter\action\UploadLetterAttachServlet.java
+通过关键字 letterUploadServlet 搜索js、jsp
+
+F:\eclipseWS\ebs\WebContent\csscis\js\competemanage\activemsgcollectiion\updcompeteImage.jsp
+
+明天跟肖相东测试接口，开卡结果。分析日志文件。
+select a.uuid from GhSmBasicSituation a where 1=1  and a.unionUuid =:ghGTradeUnionUuid
+企业账号只有企业的基本信息，在企业账号里面可以设置主席是谁，设置主席的时候是从会员基本信息里面选的，你是要找企业主席的基本信息
+
+
+按开卡网点、指证类别分文件；
+
+按开卡网点分请求发送。
+
+//数据权限
+F:\eclipseWS\ebs\src\com\css\sm\action\DirMemberInformation.java
+F:\eclipseWS\ebs\src\com\css\sm\service\StaffServive.java
+
+//上下级树
+F:\eclipseWS\ebs\src\com\css\zz\action\company\DirCompany.java
+
+216216017
+
+
+公司的网络地址202.105.139.138已经解封，此前的业务地址202.105.139.139改回202.105.139.138或使用域名www.csscis.com
+@所有人 现在住宿费是可以开具专票的，请大家出差是注意，
+10.0.3.21 ebs正式
+10.0.3.20 ebs测试
+20测试：http://10.0.3.20:8099/services/memberValidateService?wsdl
+
+113.1换mysql版本5.7
+定时存储过程。
+http://10.0.3.21:8099/services/memberValidateService?wsdl
+http://10.0.3.21:8099/ebs/services/memberValidateService?wsdl
+http://localhost:8080/ebs/services/memberValidateService?wsdl
+1、接口1   请求报错
+2、ftp文件下载异常 
+3、ebs模拟测试身份认证。
+4、多文件在一起报错。
+
+ 公司的人员可以连接上：10.192.2.201  帐号密码：csscis-a/root123  root帐号:root/root201 tomcat所在目录：/usr/local/tomcat7/apache-tomcat-7.0.76 进行查看
+
+21 E：/sms/resin-4.0.52/找startmanager.bat,startclient.bat, E：/sms/gatway.bat 短信需要开这三个bat。
+
+会员：rmm
+
+单位：lhghui
+collec_contract
+
+teamview:869art 
+
+http://26.127.253.221:9001/vcs/zh_cn/login.jsp
+
+21上的ebs：
+	tomcat-gb 
+21的个人账号： 15115506391  
+登录后 http://10.0.3.21:8099/ebs//csscis/hy/getSms.jsp
+6个  0点
+
+Administrator
+21增加远程用户msgserver/Abcd1234
+
+gaofeng@csscis.com;
+
+wangtianwen@csscis.com/Wtw123456
+
+svn:wangtianwen/wangtianwen-123
+wangtianwen/123456 这是jira的帐号密码
+第一个是企业微信。
+第二个是SVN帐号。
+各位出差的请注意：以后出差报销一定要及时报销，即一出差回来就报销，不要累计；借款的要及时销单，及付款成功后，马上将发票寄回；长期出差的，产生了费用，一个星期寄回一次；以上是张总的意思，请大家重视！！！！
+
+秦明 10-12 11:04
+10.192.2.201
+秦明 10-12 11:04
+csscis-a/root123
+
+远程：
+mstsc
+20171024_00_1_00000001_17836_2000.txt
+
+
+http://b2b.huangye88.com/
+
+
+F:\eclipseWS\ebs\src\com\css\fl\xwork-fl-lawyercomp.xml
+
+F:\eclipseWS\ebs\src\com\css\fl\xwork-fl-lawyerpoint.xml
+
+
+D:\Program Files\apache-tomcat-8.5.20\webapps\ebs\cssui\plugins\ueditor\jsp\upload\20171027
+
+/ebs/WebContent/csscis/hy/memberservicemanage/ServiceProjectApplyAndAudit/serviceprojectRecord.jsp
+F:\eclipseWS\ebs\WebContent\csscis\hy\memberservicemanage\ServiceProjectApplyAndAudit\seeServiceProject.jsp
+
+insert into 表1(字段1,字段2,字段3) select 字段1,字段2,字段3 from 表1 where id= ** ; 
+
+F:\eclipseWS\ebs\WebContent\csscis\hy\memberservicemanage\ServiceProjectApplyAndAudit\updprojectDeclare.jsp
+
+\upload\temp\ghstandard.png
+
+/upload/ebs/sm/serviceproject/0/003f09eb-3c09-4cfa-93e4-01632082ecaf.png
+
+
+/upload/ebs/sm/serviceproject/0/2009bee7-0d40-48ab-a1ce-0829c3f70a55.png
+
+D:\upload\ebs\sm\serviceproject\0\2009bee7-0d40-48ab-a1ce-0829c3f70a55.png
+JVM运行在哪个盘符就以哪个为根路径
+
+
+通    知
+
+告公司各个部门全体员工：
+
+为贯彻落实公司日常经营管理合规要求，规范日常出差报销合规流程。现规定公司各个部门全体员工自即日起：全面落实返程消差“次清次结制度”，即当次出差借款金额及报销凭证当次消差时必须结清，不得累计至下次出差或与多次出差单据同时报销。如未结清者下次出差财务部门有权拒绝允与借款，且公司针对长期不消差员工将酌情予以严肃处理。
+
+签发人：   张富林     
+
+
+                                  深圳市中软创新信息系统有限公司
+
+                                 2017年9月20日
+
+
+
+问卷调查及网络投票工作管理
+
+1、图片、视频
+2、单选、多选、填空、简答（是否智能评定）
+3、提供接口给各子系统实现他们自己的问卷。。
+4、题库、题型
+
+
+题库、题目、题型、图片附件、视频附件、选项
+
+
+文件上传：
+UploadProcessorServlet.java
+
+
+
+
+com.css.wj.action.
+
+
+networkVote
+resultQuery
+resultSummary
+subjectLibManage
+volumeControl
+volumeMake
+volumeProduce
+
+
+
+  <!-- 问卷调查与投票 -->
+  <mapping resource="com/css/wj/model/GhWjAnswerRestriction.hbm.xml"/>
+  <mapping resource="com/css/wj/model/GhWjSubject.hbm.xml"/>
+  <mapping resource="com/css/wj/model/GhWjSubjectlib.hbm.xml"/>
+  <mapping resource="com/css/wj/model/GhWjSubjectoption.hbm.xml"/>
+  <mapping resource="com/css/wj/model/GhWjSubjecttype.hbm.xml"/>
+  <mapping resource="com/css/wj/model/GhWjVolume.hbm.xml"/>
+  <mapping resource="com/css/wj/model/GhWjVolumenitem.hbm.xml"/>
+  <mapping resource="com/css/wj/model/GhWjVolumnparticipation.hbm.xml"/>
+  <!-- 问卷调查与投票结束 -->
+
+
+
+
+
+
+
+
+SELECT FAILEDLOGINCOUNT,OPENFLAG,PASSWORD FROM  s_user WHERE LOGINNAME='devadmin';
+
+UPDATE s_user SET FAILEDLOGINCOUNT='0',OPENFLAG='1' ,PASSWORD='d7c6c07a0a04ba4e65921e2f90726384' WHERE LOGINNAME='devadmin';
+
+SELECT FAILEDLOGINCOUNT '登录次数',OPENFLAG '登录状态',PASSWORD '密码' FROM  s_user WHERE LOGINNAME='devadmin';
+
+
+F:\eclipseWS\ebs\WebContent\acl\func\dirfuncpointmini.jsp
+
+F:\eclipseWS\ebs\WebContent\csscis\sm\memberinfo\addMemberInfo.jsp
+
+附件相关：
+oa_attach
+
+oa_attach_relation
+
+
+
+
+避免主从表在同一个jsp的写法。ajax局部刷新很麻烦
+
+统计
+
+
+//会不会查缓存的问题？查询结果:2,6,2,6,2,6...
+public static Page dirSubjectLib(Page page,String name) {
+		StringBuffer hql = new StringBuffer("select a.uuid from GhWjSubjectlib a where 1=1 ");
+		if(StringHelper.isNotEmpty(name)) {
+			hql.append(" and a.name like:name");
+		}
+		QueryCache qc = new QueryCache(hql.toString());
+		if(StringHelper.isNotEmpty(name)) {
+			qc.setParameter("name", "%" + name + "%");
+		}
+		page = qc.page(page);
+		page.setResults(QueryCache.idToObj(GhWjSubjectlib.class, page.getResults()));
+		return page;	
+	}
+
+
+621 559 19010019 72050
+
+
+
+
+http://localhost:8080/ebs/savVolume.action?ghWjVolume.uuid=&ghWjVolume.sysid=&ghWjVolume.type=0&ghWjVolume.name=ttt&ghWjVolume.description=&ghWjVolume.scope=0&ghWjVolume.startTime=2017-09-04&ghWjVolume.endTime=2017-09-19&ghWjVolume.status=0&ghWjVolume.tksMessage=
+
+
+http://localhost:8080/ebs/savVolume.action?ghWjVolume.uuid=&ghWjVolume.sysid=&ghWjVolume.type=0&ghWjVolume.name=ttt&ghWjVolume.description=&ghWjVolume.scope=0&ghWjVolume.startTime=2017-09-04+00%3A00%3A00&ghWjVolume.endTime=2017-09-19+00%3A00%3A00&ghWjVolume.status=0&ghWjVolume.tksMessage=
+
+622821 1099004670871
+
+
+
+星期一继续：
+问卷题目管理 新增
+F:\eclipseWS\ebs\WebContent\csscis\wj\volumeMake\addVolumeItem.jsp
+
+mysql : root/root123
+https://github.com/brianway/springmvc-mybatis-learning
+
+F:\eclipseWS\ebs\src\com\css\js\competitionmanage\action\activemsgcollection\UploadLetterAttachServlet.java
+
+D:\Program Files\apache-tomcat-8.5.20\webapps\ebs\resources\templets
+
+
+#集群部署，应用都是一样的，再写个定时器轮训问卷，对已发布的问卷再生成一遍，生成的静态页放置到tomcat服务器的某个文件夹中。
+
+
+学历：d_education
+证件类型：ID_TYPE
+国籍：SM_NATIONALITY
+民族：member_nation
+会员会籍变化类型：the_membership_status
+会员会籍变化原因：membership_cause
+性别：d_sex
+职业类别：HY_OCCUPATIONAL_CLASS
+所属行业：industry
+健康状况：HY_HEALTH_STATUS
+婚姻：HY_MARITAL_STATUS
+

@@ -1,0 +1,107 @@
+-- s_dict.sql为例
+-- 表级锁
+/*
+lock table s_dict read;
+lock table s_dict write;
+*/
+-- 1.测验读锁（共享锁）
+-- 线程T1加锁
+lock table s_dict read;
+update s_dict set code='2'  where TABLENAME='exam_away'; -- T1,T2均报错，因加了读锁,又称为共享锁
+/*
+[SQL]update s_dict set code='2'  where TABLENAME='exam_away';
+[Err] 1099 - Table 's_dict' was locked with a READ lock and can't be updated
+*/
+UNLOCK TABLES; -- 针对当前线程锁定的所有表解锁
+update s_dict set code='2'  where TABLENAME='exam_away'; -- 成功
+
+-- 2.测试写锁（排它锁）
+-- 线程T1中锁定
+lock table s_dict WRITE;
+-- 以下Sql当前线程T1 都能执行
+select * from s_dict where TABLENAME='exam_away';
+update s_dict set code='2'  where TABLENAME='exam_away'; 
+delete from s_dict where TABLENAME='exam_away';
+INSERT INTO `ebs`.`s_dict` (`UUID`, `CODE`, `NAME`, `PARENTID`, `TABLENAME`, `REMARK`, `ORDERNUM`) VALUES ('001e0ad9abd51edd7f76879966f0be8e', '2', '考试', '4d270a31c6f280ac790aba2cb81d7757', 'exam_away', '', NULL);
+INSERT INTO `ebs`.`s_dict` (`UUID`, `CODE`, `NAME`, `PARENTID`, `TABLENAME`, `REMARK`, `ORDERNUM`) VALUES ('2f374ce2130d98342f0855df22aa3e61', '2', '评分', '4d270a31c6f280ac790aba2cb81d7757', 'exam_away', '', NULL);
+
+-- 另外开一个客户端(线程),尝试运行更新。线程T2，以下写sql都需等待写锁释放
+update s_dict set code='2'  where TABLENAME='exam_away'; 
+delete from s_dict where TABLENAME='exam_away';
+INSERT INTO `ebs`.`s_dict` (`UUID`, `CODE`, `NAME`, `PARENTID`, `TABLENAME`, `REMARK`, `ORDERNUM`) VALUES ('001e0ad9abd51edd7f76879966f0be8e', '2', '考试', '4d270a31c6f280ac790aba2cb81d7757', 'exam_away', '', NULL);
+INSERT INTO `ebs`.`s_dict` (`UUID`, `CODE`, `NAME`, `PARENTID`, `TABLENAME`, `REMARK`, `ORDERNUM`) VALUES ('2f374ce2130d98342f0855df22aa3e61', '2', '评分', '4d270a31c6f280ac790aba2cb81d7757', 'exam_away', '', NULL);
+select * from s_dict where TABLENAME='exam_away';
+UNLOCK TABLES;
+
+-- 行级锁
+/*
+共享锁（Ｓ）：SELECT * FROM table_name WHERE ... LOCK IN SHARE MODE
+排他锁（X）：SELECT * FROM table_name WHERE ... FOR UPDATE
+*/
+-- 1.测试读锁
+-- T1手动提交事务，加行级共享锁.T2可读,不可写.T1事务结束后T2可写
+set autocommit=0;
+select * from s_dict where TABLENAME='exam_away' lock in share mode;
+commit;
+
+-- TABLENAME没有唯一索引，T1加行级排他锁，被锁定记录T2可读(select 操作的时候不加任何锁的)不可写  T1事务结束T2可写;没被锁定记录T2可写,不可读（因表级锁优先行锁进行了锁定）
+set autocommit=0;
+select * from s_dict where TABLENAME='exam_away' FOR UPDATE;
+commit;
+-- 以下跟上面一样
+set autocommit=0;
+update s_dict set code='2'  where TABLENAME='exam_away'; -- 默认会加排他锁(同上)
+/*
+特别说明：
+T2: select * from s_dict where TABLENAME='exam_away'; 可读,因为查询不加锁
+T2: select * from s_dict where TABLENAME='exam_away' lock in share mode; 不可读,因为它尝试在加了排他锁的记录上再加共享锁
+*/
+
+-- uuid是唯一索引，T1加行级排他锁，被锁定记录T2可读(select 操作的时候不加任何锁的)不可写  T1事务结束T2可写；没被锁定记录T2可读写
+set autocommit=0;
+select * from s_dict where uuid='001e0ad9abd51edd7f76879966f0be8e' FOR UPDATE; -- 
+commit;
+
+
+
+/**
+悲观锁(Pessimistic Lock), 顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。
+乐观锁(Optimistic Lock), 顾名思义，就是很乐观，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号等机制。
+行锁，一般是指排它锁，即被锁定行不可进行修改，删除，只可以被其他会话select。行级锁之前需要先加表结构共享锁。
+表锁，一般是指表结构共享锁锁，是不可对该表执行DDL操作，但对DML操作都不限制。
+行级锁之前需要先加表结构共享锁。
+页面锁:开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般。
+共享锁【S锁】
+又称读锁，若事务T对数据对象A加上S锁，则事务T可以读A但不能修改A，其他事务只能再对A加S锁，而不能加X锁，直到T释放A上的S锁。这保证了其他事务可以读A，但在T释放A上的S锁之前不能对A做任何修改。
+排他锁【X锁】
+又称写锁。若事务T对数据对象A加上X锁，事务T可以读A也可以修改A，其他事务不能再对A加任何锁，直到T释放A上的锁。这保证了其他事务在T释放A上的锁之前不能再读取和修改A。
+独占锁是一种悲观保守的加锁策略，它避免了读/读冲突，如果某个只读线程获取锁，则其他读线程都只能等待，这种情况下就限制了不必要的并发性，因为读操作并不会影响数据的一致性。
+更新锁
+更 新 (U) 锁可以防止通常形式的死锁。一般更新模式由一个事务组成，此事务读取记录，获取资源（页或行）的共享 (S) 锁，然后修改行，此操作要求锁转换为排它 (X) 锁。如果两个事务获得了资源上的共享模式锁，然后试图同时更新数据，则一个事务尝试将锁转换为排它 (X) 锁。
+
+-----------------------------------------------------------------------------------------------------------------------------
+表级锁
+MySQL表级锁分为读锁和写锁。
+读锁
+
+用法：LOCK TABLE table_name [ AS alias_name ] READ
+释放锁使用UNLOCK tables.可以为表使用别名，如果一旦使用别名在使用的时候也必须采用别名。成功申请读锁的前提是当前没有线程对该表使用写锁，否则该语句会被阻塞。申请读锁成功后，其他线程也可以对该表进行读操作，但不允许有线程对其进行写操作，就算是当前线程也不允许。当锁住了A表之后，就只能对A表进行读操作，对其他表进行读操作会出现错误（tablename was not locked with LOCK TABLES）
+写锁
+
+用法： LOCK TABLE table_name [AS alias_name] [ LOW_PRIORITY ] WRITE
+同样也可以使用别名，与读锁不同的是，写锁中可以指定锁的优先级。LOW_PRIORITY是一种比读锁更低优先级的锁,当多个线程同时申请多种锁（LOW_PRIORITY,READ,WRITE）时，LOW_PRIORITY的优先级最低。读锁申请成功的前提是没有线程对表加读锁和其他写锁，否则会被阻塞。
+表级锁在MyISAM和innoDB中都有用到，创建锁的开销小，不会出现死锁，由于锁定的是整张表，所以并发度低。当需要频繁对大部分数据做 GROUP BY 操作或者需要频繁扫描整个表时，推荐使用表级锁。
+行级锁
+
+行级锁是Mysql中锁定粒度最细的一种锁，能大大减少数据库操作的冲突，由于其粒度小，加锁的开销最大。行级锁分为共享锁和排他锁。
+共享锁(S LOCK)
+
+用法：SELECT ...LOCK IN SHARE MODE;
+Mysql会对查询结果中的每行都加共享锁，当没有其他线程对查询结果集中的任何一行使用排他锁时，可以成功申请共享锁，否则会被阻塞。其他线程也可以读取使用了共享锁的表，而且这些线程读取的是同一个版本的数据。
+排他锁(X LOCK)
+
+用法：SELECT ...LOCK FOR UPDATE;
+Mysql会对查询结果中的每行都加排他锁，当没有其他线程对查询结果集中的任何一行使用排他锁时，可以成功申请排他锁，否则会被阻塞。
+行级锁都是基于索引的，如果一条SQL语句用不到索引是不会使用行级锁的，会使用表级锁。行级锁的缺点是：由于需要请求大量的锁资源，所以速度慢，内存消耗大
+*/
+

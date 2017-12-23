@@ -1,0 +1,105 @@
+当前版本mysql没有出现下面bug，怀疑是mysql驱动的问题？
+
+DROP PROCEDURE IF EXISTS pro_test;
+CREATE PROCEDURE pro_test(in id INT,in parent INT,in sum INT)
+BEGIN
+DECLARE count INT DEFAULT 0;
+DECLARE i INT DEFAULT 0;
+set count=id;
+set i = rand() * 10000;
+set @exesql = concat("insert into test(
+id,parent) values ");
+set @exedata = "";
+while count<sum do 
+    set @exedata = concat(@exedata, ",(
+'", count, "',
+'", parent, "'
+)");
+    set count=count+1;
+		if i%1000=0
+    then 
+        set @exedata = SUBSTRING(@exedata, 2);
+        set @exesql = concat("insert into test(id,parent) 
+values ", @exedata);
+        prepare stmt from @exesql;
+        execute stmt;
+        DEALLOCATE prepare stmt;
+        set @exedata = "";
+    end if;
+end while;
+
+if length(@exedata)>0 
+then 
+    set @exedata = SUBSTRING(@exedata, 2);
+    set @exesql = concat("insert into test(id,parent) 
+values ", @exedata);
+    prepare stmt from @exesql;
+    execute stmt;
+    DEALLOCATE prepare stmt;
+end if;
+end;
+
+drop table if exists test;
+ CREATE TABLE `test` (
+  `id` int(11) NOT NULL,
+  `parent` int(11) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `pIdx` (`parent`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8
+
+
+INSERT INTO test VALUES (1, null);
+INSERT INTO test VALUES (2, null);
+INSERT INTO test VALUES (3, null);
+
+call pro_test(4,1,10001);
+call pro_test(10001,2,30000);
+call pro_test(30001,3,80000);
+
+select * from test;
+select count(*) from test;
+
+delete from test;
+
+SELECT c.id
+FROM test p, test c
+WHERE p.id=X AND c.id=(SELECT c2.id FROM test c2 WHERE c2.parent=p.id ORDER BY c2.id [DESC] LIMIT 0,1);
+
+X=1, without DESC: 1 row - OK
+X=1, with DESC:    1 row - OK
+X=2, without DESC: 1 row - OK
+X=2, with DESC:    empty set - ERROR (should be 1 row)
+X=3, without DESC: empty set - ERROR (should be 1 row)
+X=3, with DESC:    empty set - ERROR (should be 1 row)
+
+-- ----------------------------------------------
+X=1, without DESC: 1 row - OK
+SELECT c.id
+FROM test p, test c
+WHERE p.id=1 AND c.id=(SELECT c2.id FROM test c2 WHERE c2.parent=p.id ORDER BY c2.id LIMIT 0,1);
+
+X=1, with DESC:    1 row - OK
+SELECT c.id
+FROM test p, test c
+WHERE p.id=1 AND c.id=(SELECT c2.id FROM test c2 WHERE c2.parent=p.id ORDER BY c2.id DESC LIMIT 0,1);
+
+X=2, without DESC: 1 row - OK
+SELECT c.id
+FROM test p, test c
+WHERE p.id=2 AND c.id=(SELECT c2.id FROM test c2 WHERE c2.parent=p.id ORDER BY c2.id LIMIT 0,1);
+
+X=2, with DESC:    empty set - ERROR (should be 1 row)
+SELECT c.id
+FROM test p, test c
+WHERE p.id=2 AND c.id=(SELECT c2.id FROM test c2 WHERE c2.parent=p.id ORDER BY c2.id DESC LIMIT 0,1);
+
+X=3, without DESC: empty set - ERROR (should be 1 row)
+SELECT c.id
+FROM test p, test c
+WHERE p.id=3 AND c.id=(SELECT c2.id FROM test c2 WHERE c2.parent=p.id ORDER BY c2.id LIMIT 0,1);
+
+X=3, with DESC:    empty set - ERROR (should be 1 row)
+SELECT c.id
+FROM test p, test c
+WHERE p.id=3 AND c.id=(SELECT c2.id FROM test c2 WHERE c2.parent=p.id ORDER BY c2.id DESC LIMIT 0,1);
+
