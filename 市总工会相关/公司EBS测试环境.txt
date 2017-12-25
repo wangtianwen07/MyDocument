@@ -1,0 +1,6 @@
+公司测试环境：
+10.192.2.201  csscis-a/root123  部署有测试环境，端口8877
+	内网访问  http://10.192.2.201:8877/
+	内网访问微信：http://10.192.2.201:8877/csscis/mobile/wechat/memberCenter/memberLogin.jsp
+	外网访问：http://202.105.139.138:8877/
+	外网访问微信：http://202.105.139.138:8877/csscis/mobile/wechat/memberCenter/memberLogin.jsp
